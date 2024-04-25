@@ -3,21 +3,23 @@ package SRange;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Optional;
-
+import java.util.OptionalDouble;
 
 public class Range {
     static private ArrayList<Range> Ranges = new ArrayList<>(); //1. Ekstensja klasy Range
-    static private int totalNumOfTracks; //5. Atrybut klasowy
+    static private int totalNumOfTracks = 0; //5. Atrybut klasowy
 
     private Address address; //2. Atrybut złożony
     private ArrayList<Track> tracks; //4. Atrybut powtarzalny
-    private int slots; //6. Atrybut pochodny
+    private OptionalDouble avgDistance; //6. Atrybut pochodny
+    private int maxDistance;
     private Optional<Point> geoLocal; //3. Atrybut opcjonalny
-    public Range(Address address, ArrayList<Track> tracks){
+    public Range(Address address, int maxDistance, int slots){
         this.address = address;
-        this.tracks = tracks;
-        this.slots = tracks.size();
-        totalNumOfTracks+=slots;
+        this.maxDistance = maxDistance;
+        this.tracks = new ArrayList<Track>();
+        totalNumOfTracks += slots;
+        addTracks(slots);
         Ranges.add(this);
     }
 
@@ -38,6 +40,21 @@ public class Range {
         return maxDistance;
     }
 
+
+    public void addTracks(int amount){
+        for (int i = 1; i<= amount; i++) {
+            int size = tracks.isEmpty()?0:tracks.size();
+            this.tracks.add(new Track(this.address,size+i,maxDistance));
+        }
+        calcAvgDistance();
+    }
+
+    public void calcAvgDistance(){
+        this.avgDistance = tracks.stream()
+                .mapToDouble(Track::getDistance)
+                .average();
+    }
+
     boolean hasGeoLocal(){
         return geoLocal.isPresent();
     }
@@ -48,5 +65,13 @@ public class Range {
 
     public ArrayList<Track> getTracks() {
         return tracks;
+    }
+
+    public OptionalDouble getAvgDistance() {
+        calcAvgDistance();
+        return avgDistance;
+    }
+    public void editTracDistance(int trackNum, int newDistance){
+
     }
 }

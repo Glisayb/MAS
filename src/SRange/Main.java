@@ -7,11 +7,13 @@ public class Main {
 
         System.out.println("Hello world!");
         ArrayList<Track> tracks = new ArrayList<>();
-        tracks.add(new Track(1,25));
         Address address = new Address("Warsaw","Waldorffa","23");
-        Range w23 = new Range(address,tracks);
+        Range w23 = new Range(address,25,5);
         System.out.println(w23.numOfBelts());
+
+
         System.out.println(Range.getLongestDistance());
         System.out.println(w23.getAddress().toString());
+        System.out.println(w23.getAvgDistance());
     }
 }
