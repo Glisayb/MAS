@@ -10,6 +10,10 @@ public class Main {
         Address address = new Address("Warsaw","Waldorffa","23");
         Range w23 = new Range(address,25,5);
         System.out.println(w23.numOfBelts());
+        w23.setTrackDistance(2,13);
+        System.out.println(w23.getGeoLocal());
+        w23.setGeoLocal(21,37);
+        System.out.println(w23.getGeoLocal());
 
 
         System.out.println(Range.getLongestDistance());

@@ -42,8 +42,8 @@ public class Range {
 
 
     public void addTracks(int amount){
+        int size = tracks.isEmpty()?0:tracks.size();
         for (int i = 1; i<= amount; i++) {
-            int size = tracks.isEmpty()?0:tracks.size();
             this.tracks.add(new Track(this.address,size+i,maxDistance));
         }
         calcAvgDistance();
@@ -55,8 +55,8 @@ public class Range {
                 .average();
     }
 
-    boolean hasGeoLocal(){
-        return geoLocal.isPresent();
+    public Optional<Point> getGeoLocal() {
+        return geoLocal;
     }
 
     public Address getAddress() {
@@ -71,7 +71,23 @@ public class Range {
         calcAvgDistance();
         return avgDistance;
     }
-    public void editTracDistance(int trackNum, int newDistance){
 
+    public Optional<Track> getTrack(int trackNum){
+        var track = getTracks().stream().filter(t -> t.getNumber() == trackNum ).findFirst();
+        if (track.isPresent()) {
+            return track;
+        }
+        else {
+            throw new ArrayStoreException("nie ma takego toru na tej szczelnicy");
+        }
+    }
+    public void setTrackDistance(int trackNum, int newDistance){
+        getTrack(trackNum).get().setDistance(newDistance);
+    }
+
+    public void setGeoLocal(double x, double y) {
+        Point point = new Point();
+        point.setLocation(x,y);
+        this.geoLocal = Optional.of(point);
     }
 }
