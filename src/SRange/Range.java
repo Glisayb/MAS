@@ -17,7 +17,7 @@ public class Range {
     public Range(Address address, int maxDistance, int slots){
         this.address = address;
         this.maxDistance = maxDistance;
-        this.tracks = new ArrayList<Track>();
+        this.tracks = new ArrayList<>();
         totalNumOfTracks += slots;
         addTracks(slots);
         Ranges.add(this);

@@ -17,27 +17,6 @@ public class Track {
     }
 
     //9. Konstruktory przeciążają konstruktor bazowy
-    public Track(Address address, int number,int distance, boolean beltPresent){
-        this.number = number;
-        this.distance = distance;
-        this.address = address;
-        this.beltPresent = beltPresent;
-    }
-    public Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy){
-        this.number = number;
-        this.distance = distance;
-        this.address = address;
-        this.beltPresent = beltPresent;
-        this.blackPowderRdy = blackPowderRdy;
-    }
-    public Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy, boolean buckshotRdy){
-        this.number = number;
-        this.distance = distance;
-        this.address = address;
-        this.beltPresent = beltPresent;
-        this.blackPowderRdy = blackPowderRdy;
-        this.buckshotRdy = buckshotRdy;
-    }
     public Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy, boolean buckshotRdy, boolean proneShootingRdy){
         this.number = number;
         this.distance = distance;
