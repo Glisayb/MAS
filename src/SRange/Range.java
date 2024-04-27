@@ -83,6 +83,7 @@ public class Range {
     }
     public void setTrackDistance(int trackNum, int newDistance){
         getTrack(trackNum).get().setDistance(newDistance);
+        calcAvgDistance();
     }
 
     public void setGeoLocal(double x, double y) {
