@@ -13,9 +13,9 @@ public class Main {
 
         System.out.println(w23.numOfBelts());
         w23.setTrackDistance(2,13);
-        w23.printGeoLocal();
+        w23.getGeoLocal();
         w23.setGeoLocal(21,37);
-        w23.printGeoLocal();
+        w23.getGeoLocal();
 
         System.out.println(Range.getLongestDistance());
         System.out.println(w23.getAddress().toString());
