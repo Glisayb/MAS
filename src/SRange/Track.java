@@ -16,7 +16,6 @@ public class Track {
         this.address = address;
     }
 
-    //9. Konstruktory przeciążają konstruktor bazowy
     public Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy, boolean buckshotRdy, boolean proneShootingRdy){
         this.number = number;
         this.distance = distance;
