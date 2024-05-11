@@ -7,11 +7,23 @@ public class Main {
 
         System.out.println("Hello world!");
         ArrayList<Track> tracks = new ArrayList<>();
-        tracks.add(new Track(1,25));
-        Address address = new Address("Warsaw","Waldorffa","23");
-        Range w23 = new Range(address,tracks);
+        Address address1 = new Address("Warsaw","Waldorffa","23");
+        Address address2 = new Address("Suchodol","Suchodolska","1");
+        Range w23 = new Range(address1,25,5);
+
         System.out.println(w23.numOfBelts());
+        w23.setTrackDistance(2,13);
+        System.out.println(w23.getGeoLocal());
+        w23.setGeoLocal(21,37);
+        System.out.println(w23.getGeoLocal());
+
         System.out.println(Range.getLongestDistance());
         System.out.println(w23.getAddress().toString());
+        System.out.println(w23.getAvgDistance());
+
+        Range s1 = new Range(address1,300,2);
+
+        System.out.println(Range.getLongestDistance());
+
     }
 }

@@ -3,21 +3,23 @@ package SRange;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Optional;
-
+import java.util.OptionalDouble;
 
 public class Range {
     static private ArrayList<Range> Ranges = new ArrayList<>(); //1. Ekstensja klasy Range
-    static private int totalNumOfTracks; //5. Atrybut klasowy
+    static private int totalNumOfTracks = 0; //5. Atrybut klasowy
 
     private Address address; //2. Atrybut złożony
     private ArrayList<Track> tracks; //4. Atrybut powtarzalny
-    private int slots; //6. Atrybut pochodny
+    private OptionalDouble avgDistance; //6. Atrybut pochodny
+    private int maxDistance;
     private Optional<Point> geoLocal; //3. Atrybut opcjonalny
-    public Range(Address address, ArrayList<Track> tracks){
+    public Range(Address address, int maxDistance, int slots){
         this.address = address;
-        this.tracks = tracks;
-        this.slots = tracks.size();
-        totalNumOfTracks+=slots;
+        this.maxDistance = maxDistance;
+        this.tracks = new ArrayList<>();
+        totalNumOfTracks += slots;
+        addTracks(slots);
         Ranges.add(this);
     }
 
@@ -38,8 +40,23 @@ public class Range {
         return maxDistance;
     }
 
-    boolean hasGeoLocal(){
-        return geoLocal.isPresent();
+
+    public void addTracks(int amount){
+        int size = tracks.isEmpty()?0:tracks.size();
+        for (int i = 1; i<= amount; i++) {
+            this.tracks.add(new Track(this.address,size+i,maxDistance));
+        }
+        calcAvgDistance();
+    }
+
+    public void calcAvgDistance(){
+        this.avgDistance = tracks.stream()
+                .mapToDouble(Track::getDistance)
+                .average();
+    }
+
+    public Optional<Point> getGeoLocal() {
+        return geoLocal;
     }
 
     public Address getAddress() {
@@ -48,5 +65,30 @@ public class Range {
 
     public ArrayList<Track> getTracks() {
         return tracks;
+    }
+
+    public OptionalDouble getAvgDistance() {
+        calcAvgDistance();
+        return avgDistance;
+    }
+
+    public Optional<Track> getTrack(int trackNum){
+        var track = getTracks().stream().filter(t -> t.getNumber() == trackNum ).findFirst();
+        if (track.isPresent()) {
+            return track;
+        }
+        else {
+            throw new ArrayStoreException("nie ma takego toru na tej szczelnicy");
+        }
+    }
+    public void setTrackDistance(int trackNum, int newDistance){
+        getTrack(trackNum).get().setDistance(newDistance);
+        calcAvgDistance();
+    }
+
+    public void setGeoLocal(double x, double y) {
+        Point point = new Point();
+        point.setLocation(x,y);
+        this.geoLocal = Optional.of(point);
     }
 }
