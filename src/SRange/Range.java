@@ -91,4 +91,14 @@ public class Range {
         point.setLocation(x,y);
         this.geoLocal = Optional.of(point);
     }
+
+    void printGeoLocal(){
+        if (geoLocal!=null){
+            System.out.println("wprzolrzedna Xowa: "+geoLocal.get().getX());
+            System.out.println("wprzolrzedna Yowa: "+geoLocal.get().getY());
+        }
+        else{
+            System.out.println("nie przowadzono jeszcze wspolrzednych");
+        }
+    }
 }
