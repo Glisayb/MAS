@@ -18,6 +18,5 @@ public class CompetitionStart {
         this.time = time;
         this.person = person;
         listOfStarts.add(this);
-
     }
 }

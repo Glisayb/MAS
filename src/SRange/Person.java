@@ -11,4 +11,8 @@ public class Person {
         this.nazwisko = nazwisko;
         this.pesel = pesel;
     }
+
+    public String getPesel() {
+        return pesel;
+    }
 }

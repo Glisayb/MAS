@@ -9,7 +9,6 @@ public class Range {
 
     private ArrayList<Person> staff; //1 Zwykła
     private ArrayList<Gun> rentalGunsList; //2 Z atrybutem
-    private Map<String,GunModel> rentalGunsMap; //3 Kwalifikowana
     private ArrayList<Track> tracks; //4 Kompozycja
 
     private Address address;
@@ -21,7 +20,6 @@ public class Range {
         this.maxDistance = maxDistance;
         this.tracks = new ArrayList<>();
         this.rentalGunsList = new ArrayList<>();
-        this.rentalGunsMap = addRentalGunsMap();
         this.staff = new ArrayList<>();
         totalNumOfTracks += slots;
         addTracks(slots);
@@ -50,9 +48,15 @@ public class Range {
     public void addTracks(int amount){
         int size = tracks.isEmpty()?0:tracks.size();
         for (int i = 1; i<= amount; i++) {
-            this.tracks.add(new Track(this.address,size+i,maxDistance));
+            this.tracks.add(Track.addTrack(this.address,size+i,maxDistance));
         }
         calcAvgDistance();
+    }
+    public void removeLastTrack(){
+        if (getTrack(tracks.size()).isPresent()) {
+            Track.removeTrack(getTrack(tracks.size()-1).get());
+            tracks.remove(tracks.size()-1);
+        }
     }
 
     public void calcAvgDistance(){
@@ -71,6 +75,25 @@ public class Range {
             System.out.println("nie wprowadzono jeszcze wspolrzednych");
             return "PUSTE";
         }
+    }
+
+    public boolean addStaff(Person person) {
+        if (staff.stream().anyMatch(s -> s.getPesel() == person.getPesel())) {
+            System.out.println("nie no, on już tu pracunje");
+            return false;
+        }
+        else{
+            staff.add(person);
+            return true;
+        }
+    }
+
+    public void removeGun(String gunIDnumber){
+        this.rentalGunsList.remove(Gun.getGuns(gunIDnumber));
+        Gun.destroyGun(gunIDnumber);
+    }
+    public void addGun(String gunIDnumber){
+        Gun.changeOwner(gunIDnumber,this);
     }
 
     public Address getAddress() {
@@ -115,71 +138,4 @@ public class Range {
             System.out.println("nie przowadzono jeszcze wspolrzednych");
         }
     }
-
-    //3 Kwalifikowana
-    public Map<String,GunModel> addRentalGunsMap(){
-        Map<String,GunModel> rentalGuns = new Map<String, GunModel>() {
-            @Override
-            public int size() {
-                return 0;
-            }
-
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean containsKey(Object key) {
-                return false;
-            }
-
-            @Override
-            public boolean containsValue(Object value) {
-                return false;
-            }
-
-            @Override
-            public GunModel get(Object key) {
-                return null;
-            }
-
-            @Override
-            public GunModel put(String key, GunModel value) {
-                return null;
-            }
-
-            @Override
-            public GunModel remove(Object key) {
-                return null;
-            }
-
-            @Override
-            public void putAll(Map<? extends String, ? extends GunModel> m) {
-
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public Set<String> keySet() {
-                return null;
-            }
-
-            @Override
-            public Collection<GunModel> values() {
-                return null;
-            }
-
-            @Override
-            public Set<Entry<String, GunModel>> entrySet() {
-                return null;
-            }
-        };
-        return rentalGuns;
-    }
-
 }

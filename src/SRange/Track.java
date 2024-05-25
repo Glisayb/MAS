@@ -1,7 +1,10 @@
 package SRange;
 
+import java.util.ArrayList;
+
 public class Track {
 
+    private  static ArrayList<Track> tracks = new ArrayList<>();
     private int number;
     private int distance;
     private Address address;
@@ -10,13 +13,13 @@ public class Track {
     private boolean buckshotRdy = false;
     private boolean proneShootingRdy = false;
 
-    public Track(Address address, int number,int distance){
+    private Track(Address address, int number,int distance){
         this.number = number;
         this.distance = distance;
         this.address = address;
     }
 
-    public Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy, boolean buckshotRdy, boolean proneShootingRdy){
+    private Track(Address address, int number,int distance, boolean beltPresent, boolean blackPowderRdy, boolean buckshotRdy, boolean proneShootingRdy){
         this.number = number;
         this.distance = distance;
         this.address = address;
@@ -58,5 +61,14 @@ public class Track {
     }
     public boolean isProneShootingRdy() {
         return proneShootingRdy;
+    }
+
+    public static Track addTrack(Address address, int number,int distance){
+        Track track = new Track(address,number,distance);
+        tracks.add(track);
+        return track;
+    }
+    public static void removeTrack(Track track){
+        tracks.remove(track);
     }
 }
